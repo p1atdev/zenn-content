@@ -1,0 +1,35 @@
+{
+  "title": "Strapi v4で困った時の解決法",
+  "closed": false,
+  "archived": false,
+  "created_at": "2022-01-08",
+  "comments": [
+    {
+      "author": "platina",
+      "created_at": "2022-01-08",
+      "body_markdown": "2022/1/8時点 Strapi v4.0.3\n普通にAPIでGETしても画像やリレーションシップのデータが帰ってこないので追加でパラメータを指定すると全部帰ってくる。\n\nIDが`post`のコンテンツを全て取得したい場合\n`https://localhost:1337/api/posts`ではなく、`https://localhost:1337/api/posts?populate=*`のように`?populate=*`をつけることでちゃんと全部取得できる。\n"
+    },
+    {
+      "author": "platina",
+      "created_at": "2022-01-08",
+      "body_markdown": "https://app.quicktype.io/ というサイトにJSONをぶち込むとTSのinterfaceやSwiftのCodableを生成してくれる。\n@[card](https://app.quicktype.io/)\n\nAPIで帰ってくるJSONをTypescriptでオブジェクトにしたいときは、このサイトでinterfaceを生成して、\n\n```typescript\nimport config from \"#config\"\nimport { Posts } from \"../../@types/strapi\"\n\nexport default async () => {\n    const response = await fetch(config.STRAPI_URL + \"/api/posts?populate=*\", {\n        method: \"GET\",\n        headers: {\n            \"Content-Type\": \"application/json\",\n        },\n    })\n    const posts: Posts = await response.json()\n    console.log(posts)\n    return posts\n}\n```\n\nこんな感じで簡単に型情報をつけられる。"
+    },
+    {
+      "author": "flutternyumon",
+      "created_at": "2022-01-18",
+      "body_markdown": "strapiでRELATIONで設定したpostのcategoriesがGatsbyのgraphQLで取得できなかったので、\n試しにやってみようと思っております。\nstrapiのgraphQLでは取得できました。\n\nちなみに今、gatsby.config.jsに設定するapiURLにhttp://localhost:1337/apiを設定しているのですが、\n古い記事ではhttp://localhost:1337でいけるとあります。\n\nここの設定をいじればcategoriesも取得できるのではと思っているのですが、\nうまく入力できませんでした。\n\n何か良い方法がありそうでしたら教えていただけると助かります！\nお手数をおかけしますが、よろしくお願いします。\n\n",
+      "children": [
+        {
+          "author": "platina",
+          "created_at": "2022-01-23",
+          "body_markdown": "GraphQLはあまり詳しくないのでわからないのですが、Strapi v4ではv3と比べて結構仕様が変わっているみたいで、特にメディアやRELATION周りは色々とおかしくなっているようです。\nGatsbyのStrapiライブラリでも従来の方法ではうまくデータを取得できなさそうです。\n役に立つかはわからないですが、一応参考になりそうなリンクを貼っておきます。\n\nhttps://github.com/strapi/gatsby-source-strapi/issues/263\nhttps://github.com/strapi/gatsby-source-strapi/issues/259\nhttps://forum.strapi.io/t/how-to-query-media-fields-on-strapi-v4-with-gatsby/14178\nhttps://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.html#create-a-new-entry"
+        },
+        {
+          "author": "flutternyumon",
+          "created_at": "2022-01-25",
+          "body_markdown": "ありがとうございます！\nダウングレードして使うことにしました。\n\nHerokuにアップロードしたあと、\nコレクションの値を変更したい際って、どうされてますか？\n\n一度ローカルで変更してからもう一度githubにpushしデプロイすると\nデータが消えたり手間がかかるので、大変だなと思っております。\n\n解決策をご存知でしたら、記事にしてもらえると助かります！\n\nちなみに、strapi界隈は日本人の情報が少ないので、\n僕も微力ながら記事を書いています。\n今後も情報共有できると嬉しいです。\n"
+        }
+      ]
+    }
+  ]
+}
