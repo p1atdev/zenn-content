@@ -1,0 +1,12 @@
+title: "Swift で VPN プロトコルを構築してみよう (翻訳) (仮)"
+summary: "Network Extension Framework を使って VPN アプリを作ります。"
+topics: ["swift", "swiftui", "vpn", "tcp", "ios"]
+published: false
+price: 0 # 有料の場合200〜5000
+# 本に含めるチャプターを順番に並べましょう
+chapters:
+  - intro
+  - lets_start
+  - how_does_vpn_work
+  - part_1
+  - part_2
